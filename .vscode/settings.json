@@ -1,4 +1,5 @@
 {
     "python.analysis.typeCheckingMode": "basic",
     "python.linting.pylintEnabled": false,
+    "cursorpyright.analysis.typeCheckingMode": "basic",
 }

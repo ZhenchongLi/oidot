@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{DOCUMENT_TITLE}}</title>
+    <style>
+        /* * 通用页面和字体设置 
+         * 使用A4纸张的尺寸和边距来模拟真实文档
+        */
+        body {
+            background-color: #f0f0f0; /* 页面背景色，方便区分白色文档区域 */
+            font-family: 'Times New Roman', 'KaiTi', serif; /* 默认西文字体和中文字体 */
+            display: flex;
+            flex-direction: column; /* 允许多个页面垂直排列 */
+            align-items: center;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .page {
+            background: white;
+            width: 210mm;
+            min-height: 297mm; /* 使用A4纸张高度 */
+            padding: 37mm 26mm 35mm 28mm; /* 根据dotx文件元数据设置页边距 */
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            line-height: 28pt; /* 根据文档设置，统一行高，以满足每页22行的要求 */
+            margin-bottom: 20px; /* 页面之间的间距 */
+        }
+        
+        /* * 定义文档中使用的特殊中文字体
+         * 浏览器会尝试使用本地字体，如果找不到，则使用备用字体
+        */
+        .font-fzxbs { /* 方正小标宋简体 */
+            font-family: 'FangZheng XiaoBiaoSong JianTi', 'STSong', 'SimSun', serif;
+        }
+
+        .font-fs { /* 仿宋_GB2312, 并为数字和字母指定Times New Roman */
+            font-family: 'Times New Roman', 'FangSong_GB2312', 'STFangsong', 'SimSun', serif;
+        }
+        
+        .font-ht { /* 黑体 */
+            font-family: 'HeiTi', 'SimHei', 'Microsoft YaHei', sans-serif;
+        }
+
+        /* 移除所有元素的默认内外边距，以便精确控制 */
+        p, h1, h2, div {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* 页眉部分样式 */
+        .header-container {
+            text-align: center; /* 居中 .masthead-wrapper */
+        }
+        
+        .masthead-wrapper {
+            display: inline-block; /* 关键：使容器宽度自适应内容，并能被父元素居中 */
+            position: relative;    /* 关键：为绝对定位的文号提供基准 */
+            margin-bottom: 3em;    /* 为下方的绝对定位元素留出空间 */
+        }
+        
+        .masthead {
+            font-size: 34pt;
+            color: #FF0000;
+            font-weight: bold;
+            margin-bottom: 10px; /* 标题与红线的间距 */
+        }
+        
+        .red-line {
+            /* 使用上下边框模拟上粗下细的双红线 */
+            border-top: 3pt solid red;
+            border-bottom: 1pt solid red;
+            height: 2pt; /* 控制两条线之间的间距 */
+            width: 100%; /* 关键：使其宽度与父容器(masthead-wrapper)一致 */
+        }
+        
+        .doc-number {
+            position: absolute;
+            top: 100%;         /* 定位在红线正下方 */
+            right: 0;          /* 对齐到包装器的右边缘 */
+            width: 100%;       /* 使宽度与包装器一致 */
+            font-size: 16pt;
+            text-align: right; /* 实现文本的右对齐 */
+            padding-right: 2em;/* 实现向内缩进的效果 */
+            margin-top: 5px;   /* 与红线之间的微小间距 */
+        }
+
+        /* 主体内容样式 */
+        .doc-title {
+            text-align: center;
+            font-size: 22pt; /* 二号字体 */
+            font-weight: bold;
+            margin-top: 50px; /* 调整标题与页眉的间距 */
+            margin-bottom: 20px;
+            line-height: 32pt; /* 按要求设置标题行距为32磅 */
+        }
+
+        .recipient {
+            font-size: 16pt;
+            margin-top: 20px; /* 标题与收件人之间的间距 */
+            margin-bottom: 20px;
+        }
+        
+        .main-body p {
+            font-size: 16pt; /* 3号字体 */
+            text-indent: 2em; /* 首行缩进两个字符 */
+            text-align: justify; /* 两端对齐，撑满版心 */
+        }
+        
+        /* 附件部分样式 */
+        .attachments-container {
+            margin-top: 30px; /* 正文空一行位置 */
+            font-size: 16pt;
+        }
+
+        .attachment-line {
+            display: flex; /* 使用flexbox进行布局，确保标签和内容分离 */
+            text-indent: 2em; /* 实现整体左空二字 */
+        }
+
+        .attachment-line .label {
+            flex-shrink: 0; /* 防止“附件：”标签被压缩 */
+        }
+
+        .attachment-line .content p {
+            text-indent: 0; /* 附件列表内容本身不缩进 */
+            margin: 0;
+        }
+        
+        /* 页脚和签名区域样式 */
+        .footer-content {
+            margin-top: auto; /* 将页脚推到页面底部 */
+        }
+        
+        .signature-block {
+            font-size: 16pt;
+            margin-top: 80px; /* 约等于空3行 */
+        }
+        
+        .sender {
+            /* 模拟Word中的首行缩进，将文本推向右侧 */
+            padding-left: 14em; 
+        }
+
+        .date {
+            text-align: right;
+            /* 模拟Word中的右缩进，实现“右空4字” */
+            padding-right: 4em; 
+        }
+
+        .contact-info {
+            font-size: 16pt;
+            margin-top: 28pt; /* 在成文日期下空一行 */
+            text-indent: 2em;  /* 居左空二字 */
+        }
+
+        .bottom-red-line {
+            /* 使用上下边框模拟上粗下细的双红线 */
+            border-top: 3pt solid red;
+            border-bottom: 1pt solid red;
+            height: 2pt; /* 控制两条线之间的间距 */
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        /* 附件页专属样式 */
+        .attachment-header {
+            font-size: 16pt; /* 3号黑体 */
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .attachment-title {
+            font-size: 22pt; /* 2号字体 */
+            font-weight: bold;
+            text-align: center;
+            margin-top: 56pt; /* 模拟在第三行（空两行） */
+            margin-bottom: 20px;
+        }
+
+        .cc-info {
+            font-size: 14pt; /* 4号仿宋 */
+            /* 使用悬挂缩进技术实现换行对齐 */
+            padding-left: 4em; 
+            text-indent: -3em;
+        }
+
+        .page-number {
+            font-size: 14pt;
+            margin-top: 10px;
+        }
+        
+        .page-number.odd {
+            text-align: right;
+        }
+
+        .page-number.even {
+            text-align: left;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 主文件页 -->
+    <div class="page">
+        <header>
+            <div class="header-container">
+                <div class="masthead-wrapper">
+                    <div class="masthead font-fzxbs">{{MASTHEAD}}</div>
+                    <div class="red-line"></div>
+                    <!-- 文号现在位于包装器内部，以确保对齐的稳定性 -->
+                    <p class="doc-number font-fs">{{DOC_NUMBER}}</p>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <h1 class="doc-title font-fzxbs">
+                {{DOCUMENT_TITLE}}
+            </h1>
+            <p class="recipient font-fs">{{RECIPIENT}}：</p>
+            <div class="main-body font-fs">
+                <p>{{MAIN_BODY_P1}}</p>
+            </div>
+            <div class="attachments-container font-fs">
+                <div class="attachment-line">
+                    <div class="label">附件：</div>
+                    <div class="content">
+                        {{ATTACHMENTS_LIST}}
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer-content">
+            <div class="signature-block font-fs">
+                <p class="sender">{{SENDER}}</p>
+                <p class="date">{{DATE}}</p>
+            </div>
+            <p class="contact-info font-fs">（联系人：{{CONTACT_PERSON}}；联系电话：{{CONTACT_PHONE}}）</p>
+            <div class="bottom-red-line"></div>
+            <p class="page-number odd font-fs">— {{PAGE_NUMBER_1}} —</p>
+        </footer>
+    </div>
+    
+    <!-- 附件页 -->
+    <div class="page">
+        <header>
+            <h2 class="attachment-header font-ht">附件</h2>
+        </header>
+        
+        <main>
+            <h1 class="attachment-title font-fzxbs">
+                {{ATTACHMENT_TITLE}}
+            </h1>
+            <div class="main-body font-fs">
+                <p>{{ATTACHMENT_BODY_P1}}</p>
+            </div>
+        </main>
+        
+        <footer class="footer-content">
+            <p class="cc-info font-fs">抄送：{{CC_LIST}}</p>
+            <p class="page-number even font-fs">— {{PAGE_NUMBER_2}} —</p>
+        </footer>
+    </div>
+
+</body>
+</html>

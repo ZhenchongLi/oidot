@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于对京沪高铁沿线部分区段信号设备进行现代化升级改造的请示</title>
+    <style>
+        /* *
+         * 通用页面和字体设置 
+         * 使用A4纸张的尺寸和边距来模拟真实文档
+         */
+        body {
+            background-color: #f0f0f0; /* 页面背景色，方便区分白色文档区域 */
+            font-family: 'Times New Roman', 'KaiTi', serif; /* 默认西文字体和中文字体 */
+            display: flex;
+            flex-direction: column; /* 允许多个页面垂直排列 */
+            align-items: center;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .page {
+            background: white;
+            width: 210mm;
+            min-height: 297mm; /* 使用A4纸张高度 */
+            padding: 37mm 26mm 35mm 28mm; /* 根据readme规范设置页边距 */
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            line-height: 28pt; /* 根据文档设置，统一行高，以满足每页22行的要求 */
+            margin-bottom: 20px; /* 页面之间的间距 */
+            position: relative; /* 为页脚绝对定位提供基准 */
+        }
+        
+        /* * * 定义文档中使用的特殊中文字体
+         * 浏览器会尝试使用本地字体，如果找不到，则使用备用字体
+         */
+        .font-fzxbs { /* 方正小标宋简体 */
+            font-family: 'FangZheng XiaoBiaoSong JianTi', 'STSong', 'SimSun', serif;
+        }
+
+        .font-fs { /* 仿宋_GB2312, 并为数字和字母指定Times New Roman */
+            font-family: 'FangSong_GB2312', 'STFangsong', 'SimSun', serif;
+        }
+
+        .font-ht { /* 黑体 */
+            font-family: 'SimHei', 'Microsoft YaHei', sans-serif;
+        }
+
+        /* 移除所有元素的默认内外边距，以便精确控制 */
+        p, h1, h2, h3, h4, div {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* 页眉部分样式 */
+        .header-container {
+            text-align: center; /* 居中 .masthead-wrapper */
+        }
+        
+        .masthead-wrapper {
+            display: inline-block; /* 关键：使容器宽度自适应内容，并能被父元素居中 */
+            position: relative;    /* 关键：为绝对定位的文号提供基准 */
+        }
+        
+        .masthead {
+            font-size: 34pt;
+            color: #FF0000;
+            font-weight: bold;
+        }
+        
+        .red-line-top {
+            /* 使用上下边框模拟上粗下细的双红线 */
+            border-top: 3pt solid red;
+            border-bottom: 1pt solid red;
+            height: 2pt; /* 控制两条线之间的间距 */
+            width: 100%; /* 关键：使其宽度与父容器(masthead-wrapper)一致 */
+            margin-top: 5px;
+        }
+        
+        .doc-number {
+            font-size: 16pt;
+            text-align: right; /* 实现文本的右对齐 */
+            padding-top: 5px;
+            padding-right: 2em; /* 实现向内缩进约2个字符的效果 */
+        }
+
+        /* 主体内容样式 */
+        .doc-title {
+            text-align: center;
+            font-size: 22pt; /* 二号字体 */
+            font-weight: bold;
+            margin-top: 56pt; /* 更新：严格按照规范，在红线下空2行 (2 * 28pt) */
+            margin-bottom: 28pt; /* 更新：严格按照规范，与主送机关空1行 (1 * 28pt) */
+            line-height: 32pt; /* 按要求设置标题自身行距为32磅 */
+        }
+
+        .recipient {
+            font-size: 16pt;
+            margin-bottom: 28pt; /* 与正文空1行 */
+            text-align: left;
+            padding: 0;
+        }
+        
+        .main-body p, .main-body h3, .main-body h4 {
+            font-size: 16pt; /* 3号字体 */
+            text-indent: 2em; /* 首行缩进两个字符 */
+            text-align: justify; /* 两端对齐，撑满版心 */
+            margin-bottom: 14pt; /* 段落间距 */
+        }
+         .main-body h3, .main-body h4 {
+            font-weight: bold;
+            text-indent: 0;
+            text-align: center;
+        }
+
+        .main-body h4 {
+            font-size: 14pt;
+        }
+
+        .main-body .no-indent {
+            text-indent: 0;
+        }
+        
+        /* 附件部分样式 */
+        .attachments-container {
+            margin-top: 28pt; /* 与正文空1行 */
+            font-size: 16pt;
+            text-indent: 2em; /* “附件”整体缩进2字符 */
+        }
+        
+        .attachments-container p {
+            margin:0;
+            padding:0;
+            text-indent: 0; /* 列表内容不缩进 */
+        }
+
+        .attachments-list {
+            display: inline-block;
+            vertical-align: top;
+            padding-left: 1em; /* 与“附件：”标签的距离 */
+        }
+
+        /* 页脚和签名区域样式 */
+        .footer-block {
+            margin-top: auto; /* 将页脚推到页面底部 */
+        }
+        
+        .signature-block {
+            font-size: 16pt;
+            margin-top: 84pt; /* 约等于空3行 */
+        }
+        
+        .sender {
+            padding-left: 14em; /* 通过左内边距使其视觉居中于日期之上 */
+        }
+
+        .date {
+            text-align: right;
+            padding-right: 4em; /* 右侧留出约4个字符的空白 */
+        }
+
+        .contact-info {
+            font-size: 16pt;
+            margin-top: 28pt; /* 在成文日期下空一行 */
+            text-indent: 2em;  /* 居左空二字 */
+        }
+
+        .bottom-red-line {
+            border-top: 3pt solid red;
+            border-bottom: 1pt solid red;
+            height: 2pt;
+            width: 100%; /* 横跨整个版心 */
+            margin-top: 20px;
+        }
+        
+        .page-number {
+            font-size: 14pt;
+            margin-top: 10px;
+        }
+        
+        .page-number.odd {
+            display: none; /* 更新：奇数页不显示页码 */
+        }
+
+        .page-number.even {
+            text-align: left; /* 更新：偶数页页码靠左对齐 */
+        }
+
+        /* 附件页专属样式 */
+        .attachment-identifier {
+            font-size: 16pt; /* 3号黑体 */
+            font-weight: bold;
+            text-align: left;
+            position: absolute;
+            top: 37mm; /* 与版心顶部对齐 */
+            left: 28mm; /* 与版心左侧对齐 */
+        }
+
+        .attachment-title {
+            font-size: 20pt; /* 附件标题，比主标题略小 */
+            font-weight: bold;
+            text-align: center;
+            margin-top: 56pt; /* 模拟在第三行（空两行） */
+            margin-bottom: 28pt;
+        }
+
+        .cc-info {
+            font-size: 14pt; /* 4号仿宋 */
+            padding-left: 1em; 
+            text-indent: -1em;
+            margin-top: 28pt;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 主文件页 -->
+    <div class="page">
+        <header>
+            <div class="header-container">
+                <div class="masthead-wrapper" id="mastheadWrapper">
+                    <div class="masthead font-fzxbs">北京铁路通信信号运维中心</div>
+                    <div class="red-line-top"></div>
+                </div>
+                 <p class="doc-number font-fs">京运维函〔2024〕25号</p>
+            </div>
+        </header>
+
+        <main>
+            <h1 class="doc-title font-fzxbs">
+                关于对京沪高铁沿线部分区段信号设备<br>进行现代化升级改造的请示
+            </h1>
+            <p class="recipient font-fs">国铁集团工电部：</p>
+            <div class="main-body font-fs">
+                <p>为保障国家高速铁路大动脉——京沪高铁的安全、高效与畅通，我中心近期组织技术专家对沿线通信信号设备进行了全面排查与评估。经排查发现，部分早期投入运营的区段，其信号设备在长期高负荷运行下，存在一定的老化现象与技术瓶颈，虽经多次维护保养，仍难以完全适应未来更高密度、更高速度的客货运要求，存在潜在安全风险。</p>
+                <p>为彻底消除隐患，推动京沪高铁信号系统的技术迭代与升级，我中心研究制定了详细的现代化升级改造方案。该方案拟采用当前业界领先的CTCS-3级列控系统进行全面替换升级，并引入基于大数据的故障预测与健康管理（PHM）系统，以期实现对信号设备的全生命周期智能化管理。项目建成后，将极大提升京沪高铁的线路容量、列车运行准点率及全天候运营能力，为旅客提供更为安全、可靠、便捷的出行服务。</p>
+                <p>该项目意义重大，恳请贵部予以审议，并批准立项。</p>
+                <p class="no-indent" style="text-align: right; padding-right: 2em;">特此报告。</p>
+            </div>
+            <div class="attachments-container font-fs">
+                <span>附件：</span>
+                <div class="attachments-list">
+                    <p>1. 京沪高铁部分区段信号设备现代化升级改造可行性研究报告</p><p>2. 项目投资估算与资金筹措方案</p>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer-block">
+            <div class="signature-block font-fs">
+                <p class="sender">北京铁路通信信号运维中心</p>
+                <p class="date">二〇二四年六月三十日</p>
+            </div>
+            <!-- 联系人信息在真实公文中通常不出现，但根据模板保留 -->
+            <!-- <p class="contact-info font-fs">（联系人：张三；联系电话：010-87654321）</p> -->
+            <div class="bottom-red-line"></div>
+            <p class="page-number odd font-fs">— 1 —</p>
+        </footer>
+    </div>
+    
+    <!-- 附件页 1 -->
+    <div class="page">
+        <div class="attachment-identifier font-ht">附件1</div>
+        <main>
+            <h1 class="attachment-title font-fzxbs">
+                京沪高铁部分区段信号设备现代化升级改造可行性研究报告
+            </h1>
+            <div class="main-body font-fs">
+                <h3 class="font-ht">摘要</h3>
+                <p>本报告旨在论证对京沪高速铁路部分早期投运区段（重点为xx至xx区段）的现有信号系统进行现代化升级改造的必要性与可行性。通过对现有设备状况、技术瓶颈及未来运营需求的深入分析，报告提出采用先进的CTCS-3级列控系统及配套智能化运维技术进行升级的方案，并从技术、经济、安全及社会效益等多个维度评估了项目的可行性。</p>
+                
+                <h4 class="font-ht">1. 项目背景与必要性</h4>
+                <p>京沪高铁作为我国客运量最大、社会关注度最高的高速铁路干线，其运营安全与效率至关重要。报告指出现有信号系统自2011年开通运营至今，已近15年，部分核心部件已进入老化期，且其技术架构在应对未来更高的列车密度和自动化驾驶趋势方面存在局限。为预防系统性风险、提升线路运输能力，并与国家“交通强国”战略保持同步，进行前瞻性的技术升级改造刻不容缓。</p>
+
+                <h4 class="font-ht">2. 现有设备状况分析</h4>
+                <p><strong>设备老化问题：</strong>详细列举了室外应答器、轨道电路及车站联锁等关键设备的老化数据、故障率统计及维护成本逐年攀升的图表。</p>
+                <p><strong>技术瓶颈：</strong>分析了现有系统在数据处理能力、信息冗余设计及与新兴技术（如5G-R、北斗卫星导航）融合方面的不足。</p>
+                <p><strong>运维挑战：</strong>当前基于故障响应的传统运维模式，难以有效预测并预防潜在故障，对运维人员的经验依赖度高，效率有待提升。</p>
+
+                <h4 class="font-ht">3. 升级改造方案</h4>
+                <p><strong>总体目标：</strong>以最小化影响日间运营为原则，全面替换目标区段的信号系统为最新的CTCS-3级列控系统。</p>
+                <p><strong>核心技术：</strong><br>
+                <strong>列控系统：</strong>采用支持更高安全完整性等级（SIL4）的硬件平台，提升系统的可靠性与可用性。<br>
+                <strong>数据网络：</strong>构建基于新一代移动通信技术（5G-R）的车地数据传输网络，为未来实现自动驾驶（ATO）和智能动车组功能预留接口。<br>
+                <strong>智能化运维：</strong>引入基于大数据的故障预测与健康管理（PHM）平台，通过对设备状态的实时监测与数据分析，实现从“被动维修”到“主动预警”的转变，降低全生命周期成本。</p>
+                <p><strong>实施计划：</strong>建议项目周期为24个月，分三阶段进行：方案深化与设备采购、夜间“天窗”点施工安装、系统联调联试与割接。</p>
+                 
+                <h4 class="font-ht">4. 效益分析</h4>
+                <p><strong>安全效益：</strong>从根本上消除因设备老化带来的安全隐患，系统可靠性预计提升30%以上。</p>
+                <p><strong>运输效率：</strong>最小追踪间隔有望缩短10-15%，可有效提升高峰时段的线路运输能力，满足日益增长的客运需求。</p>
+                <p><strong>经济效益：</strong>虽然初期投资较高，但通过降低维护成本和提升运营效率，预计项目投资回收期约为8-10年。</p>
+                <p><strong>社会效益：</strong>巩固京沪高铁作为世界级高铁的标杆地位，提升国家基础设施的现代化水平。</p>
+                
+                <h4 class="font-ht">5. 结论</h4>
+                <p>综上所述，本项目技术方案成熟、实施路径清晰、预期效益显著，具有高度的可行性与紧迫性。建议上级部门尽快批准立项，启动项目。</p>
+            </div>
+        </main>
+        
+        <footer class="footer-block">
+             <div class="bottom-red-line"></div>
+            <p class="page-number even font-fs">— 2 —</p>
+        </footer>
+    </div>
+    
+    <!-- 附件页 2 -->
+    <div class="page">
+        <div class="attachment-identifier font-ht">附件2</div>
+        <main>
+            <h1 class="attachment-title font-fzxbs">
+                项目投资估算与资金筹措方案
+            </h1>
+            <div class="main-body font-fs">
+                <h4 class="font-ht">1. 项目总投资估算</h4>
+                <p>根据当前市场价格及类似项目的建设经验，本项目总投资估算为人民币XX.X亿元。详细构成如下：</p>
+                <p class="no-indent" style="padding-left:2em;"><strong>设备购置费：</strong>XX.X亿元<br>
+                CTCS-3级列控系统软硬件（含车载、地面设备）<br>
+                智能化运维（PHM）系统平台<br>
+                配套通信及电源改造设备</p>
+                <p class="no-indent" style="padding-left:2em;"><strong>工程建设费：</strong>X.X亿元<br>
+                设备安装、拆除及线缆敷设<br>
+                系统调试与测试</p>
+                <p class="no-indent" style="padding-left:2em;"><strong>其他费用：</strong>X.X亿元<br>
+                设计、监理、咨询费<br>
+                人员培训费<br>
+                预备费及不可预见费</p>
+                
+                <h4 class="font-ht">2. 资金筹措方案</h4>
+                 <p>为确保项目顺利实施，建议采取多元化的资金筹措模式，具体方案如下：</p>
+                <p class="no-indent" style="padding-left:2em;"><strong>国家铁路集团专项资金：</strong>申请国铁集团“铁路安全生产基础设施更新改造专项资金”XX.X亿元，作为项目资本金。这是本项目资金的主要来源，符合专项资金用于消除重大安全隐患、提升技术装备水平的宗旨。</p>
+                <p class="no-indent" style="padding-left:2em;"><strong>沿线地方政府财政支持：</strong>考虑到项目对提升区域交通便利性和经济发展的巨大推动作用，建议积极与线路所经的北京市、天津市、河北省、山东省、江苏省及上海市等地方政府沟通，争取获得总计X.X亿元的财政配套支持资金。</p>
+                <p class="no-indent" style="padding-left:2em;"><strong>银行贷款：</strong>就剩余资金缺口部分，拟与国家开发银行、中国工商银行等政策性及商业银行进行接洽，申请长期低息项目贷款。</p>
+
+                <h4 class="font-ht">3. 资金使用计划</h4>
+                <p>项目资金将严格按照工程进度分批拨付，并接受国家审计部门和集团财务部门的全程监督，确保资金使用合法、合规、高效。</p>
+                <p class="no-indent" style="padding-left:2em;"><strong>第一年（项目启动与设备采购）：</strong>支付约40%资金</p>
+                <p class="no-indent" style="padding-left:2em;"><strong>第二年（工程实施与系统调试）：</strong>支付约50%资金</p>
+                <p class="no-indent" style="padding-left:2em;"><strong>第三年（项目验收与尾款支付）：</strong>支付剩余10%资金</p>
+                <p>本方案旨在为项目的顺利启动和实施提供坚实的财务保障。恳请上级部门审议。</p>
+            </div>
+        </main>
+        
+        <footer class="footer-block">
+            <div class="bottom-red-line"></div>
+            <p class="page-number odd font-fs">— 3 —</p>
+        </footer>
+    </div>
+    <script>
+        // 使用JS确保红头线宽度与文字完全一致
+        window.onload = function() {
+            const mastheadWrapper = document.getElementById('mastheadWrapper');
+            const mastheadText = mastheadWrapper.querySelector('.masthead');
+            const redLine = mastheadWrapper.querySelector('.red-line-top');
+
+            // 获取文字的实际渲染宽度
+            const textWidth = mastheadText.offsetWidth;
+            
+            // 设置包装器和红线的宽度
+            // mastheadWrapper.style.width = textWidth + 'px';
+        };
+    </script>
+</body>
+</html>
