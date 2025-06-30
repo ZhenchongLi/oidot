@@ -2,4 +2,12 @@
     "python.analysis.typeCheckingMode": "basic",
     "python.linting.pylintEnabled": false,
     "cursorpyright.analysis.typeCheckingMode": "basic",
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/*.pyc": true
+    },
+    "search.exclude": {
+        "**/__pycache__": true,
+        "**/*.pyc": true
+    },
 }
