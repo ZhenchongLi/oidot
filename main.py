@@ -1,4 +1,8 @@
+"""Main entry point for the oidot project."""
+
+
 def main():
+    """Main function for oidot."""
     print("Hello from oidot!")
 
 
